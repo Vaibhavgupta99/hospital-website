@@ -1,13 +1,10 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   ChevronRight, MapPin, Phone, Mail, MessageCircle,
-  Clock, Send, CheckCircle, Globe
+  Clock, Globe
 } from 'lucide-react';
-import CustomSelect from '../components/CustomSelect';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import BookAppointmentForm from '../components/BookAppointmentForm';
 
 const contactInfo = [
   { icon: <MapPin size={22} />, title: 'Visit Us', primary: 'Near Bus Stand, Main Road', secondary: 'Rewa, Madhya Pradesh 486001' },
@@ -19,18 +16,6 @@ const contactInfo = [
 ];
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
-  const [startDate, setStartDate] = useState(null);
-  const [time, setTime] = useState('');
-  const [department, setDepartment] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 200, behavior: 'smooth' });
-    setTimeout(() => setSubmitted(false), 5000);
-  };
-
   return (
     <main>
       <div className="page-header">
@@ -50,12 +35,7 @@ export default function Contact() {
       {/* Contact Info Cards */}
       <section className="section">
         <div className="container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '24px',
-            marginBottom: '64px',
-          }}>
+          <div className="contact-info-grid">
             {contactInfo.map((info, i) => (
               <motion.div
                 key={i}
@@ -179,92 +159,15 @@ export default function Contact() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <h3>📋 Book an Appointment</h3>
-              <p style={{ color: 'var(--gray-500)', fontSize: 'var(--text-sm)', marginBottom: '24px' }}>
-                Fill in the form below and we'll get back to you within 30 minutes during working hours.
+              <BookAppointmentForm />
+              <p style={{
+                fontSize: 'var(--text-xs)',
+                color: 'var(--gray-400)',
+                textAlign: 'center',
+                marginTop: '16px',
+              }}>
+                By submitting, you agree to our privacy policy. We'll never share your information.
               </p>
-
-              {submitted ? (
-                <motion.div
-                  className="form-success"
-                  style={{ padding: '48px 24px' }}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                >
-                  <CheckCircle size={56} style={{ margin: '0 auto 16px', display: 'block' }} />
-                  <p style={{ fontSize: 'var(--text-xl)', fontWeight: 600, marginBottom: '8px' }}>
-                    Appointment Request Sent!
-                  </p>
-                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-500)' }}>
-                    Thank you! Our team will call you back within 30 minutes to confirm your appointment.
-                  </p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label>Full Name *</label>
-                      <input type="text" placeholder="Enter your full name" required />
-                    </div>
-                    <div className="form-group">
-                      <label>Phone Number *</label>
-                      <input type="tel" placeholder="+91 98765 43210" required />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label>Email Address</label>
-                    <input type="email" placeholder="your.email@example.com" />
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label>Preferred Date *</label>
-                      <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Select a date"
-                        minDate={new Date()}
-                        required
-                        className="react-datepicker-input"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Preferred Time</label>
-                      <CustomSelect 
-                        options={['9:00 AM - 11:00 AM', '11:00 AM - 1:00 PM', '2:00 PM - 4:00 PM', '4:00 PM - 6:00 PM', '6:00 PM - 8:00 PM']}
-                        value={time}
-                        onChange={setTime}
-                        placeholder="Select time"
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label>Department *</label>
-                    <CustomSelect 
-                      options={['General Medicine', 'Internal Medicine', 'Eye Care & Ophthalmology', 'Diagnostics & Pathology', 'Health Checkup', 'Preventive Health']}
-                      value={department}
-                      onChange={setDepartment}
-                      placeholder="Select department"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Your Concern / Message</label>
-                    <textarea placeholder="Briefly describe your health concern or reason for visit..." rows={4}></textarea>
-                  </div>
-                  <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
-                    <Send size={18} />
-                    Request Appointment
-                  </button>
-                  <p style={{
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--gray-400)',
-                    textAlign: 'center',
-                    marginTop: '16px',
-                  }}>
-                    By submitting, you agree to our privacy policy. We'll never share your information.
-                  </p>
-                </form>
-              )}
             </motion.div>
           </div>
         </div>

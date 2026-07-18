@@ -1,9 +1,8 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { MapPin, Phone, Mail, MessageCircle, Clock, Send, CheckCircle, ChevronRight } from 'lucide-react';
-import CustomSelect from '../CustomSelect';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { MapPin, Phone, Mail, MessageCircle, Clock, ChevronRight } from 'lucide-react';
+import BookAppointmentForm from '../BookAppointmentForm';
+
 const contactCards = [
   { icon: <MapPin size={20} />, title: 'Visit Us', info: 'Near Bus Stand, Main Road,\nRewa, MP 486001' },
   { icon: <Phone size={20} />, title: 'Call Us', info: '+91 98765 43210\n+91 76543 21098' },
@@ -12,17 +11,8 @@ const contactCards = [
 ];
 
 export default function ContactSection() {
-  const [submitted, setSubmitted] = useState(false);
-  const [startDate, setStartDate] = useState(null);
-  const [department, setDepartment] = useState('');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
-  };
 
   return (
     <section className="section" id="contact" ref={ref}>
@@ -109,62 +99,7 @@ export default function ContactSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            <h3>📋 Book an Appointment</h3>
-            {submitted ? (
-              <motion.div
-                className="form-success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-              >
-                <CheckCircle size={40} style={{ margin: '0 auto 12px', display: 'block' }} />
-                <p style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '4px' }}>Appointment Request Sent!</p>
-                <p style={{ fontSize: '0.875rem', color: '#6B7280' }}>We'll call you back within 30 minutes to confirm.</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Enter your name" required />
-                  </div>
-                  <div className="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" placeholder="+91 98765 43210" required />
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Preferred Date</label>
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      dateFormat="dd/MM/yyyy"
-                      placeholderText="Select a date"
-                      minDate={new Date()}
-                      required
-                      className="react-datepicker-input"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Department</label>
-                    <CustomSelect 
-                      options={['General Medicine', 'Internal Medicine', 'Eye Care', 'Diagnostics', 'Health Checkup', 'Preventive Health']}
-                      value={department}
-                      onChange={setDepartment}
-                      placeholder="Select department"
-                    />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label>Message (Optional)</label>
-                  <textarea placeholder="Tell us about your concern..." rows={4}></textarea>
-                </div>
-                <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
-                  <Send size={18} />
-                  Request Appointment
-                </button>
-              </form>
-            )}
+            <BookAppointmentForm />
           </motion.div>
         </div>
       </div>

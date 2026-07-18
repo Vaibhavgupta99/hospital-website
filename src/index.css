@@ -1519,6 +1519,98 @@ select {
 }
 
 /* ============================================
+   SERVICES DETAIL CARDS
+   ============================================ */
+.services-list {
+  display: grid;
+  gap: 32px;
+}
+
+.service-detail-card {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.service-detail-card-reverse {
+  grid-template-columns: 2fr 1fr;
+}
+
+.service-detail-card-reverse .service-detail-icon-area {
+  order: 1;
+}
+
+.service-detail-card-reverse .service-detail-content {
+  order: 0;
+}
+
+.service-detail-icon-area {
+  background: linear-gradient(135deg, rgba(11, 94, 215, 0.04) 0%, rgba(0, 180, 216, 0.04) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.service-detail-icon-box {
+  width: 100px;
+  height: 100px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(11, 94, 215, 0.3);
+}
+
+.service-detail-content {
+  padding: 36px;
+}
+
+.service-detail-content h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+.service-detail-content p {
+  color: var(--gray-500);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-size: var(--text-base);
+}
+
+.service-detail-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.service-detail-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--gray-600);
+}
+
+/* ============================================
+   CONTACT INFO GRID (Contact Page)
+   ============================================ */
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 64px;
+}
+
+/* ============================================
    CONTACT SECTION
    ============================================ */
 .contact-grid {
@@ -2191,6 +2283,11 @@ select {
   box-shadow: 0 8px 25px rgba(11, 94, 215, 0.5);
 }
 
+/* Global overflow prevention */
+html, body {
+  overflow-x: hidden;
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
@@ -2262,9 +2359,36 @@ select {
   .testimonial-card {
     min-width: calc(50% - 16px);
   }
+
+  .service-detail-card,
+  .service-detail-card-reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .service-detail-card-reverse .service-detail-icon-area {
+    order: 0;
+  }
+
+  .service-detail-card-reverse .service-detail-content {
+    order: 1;
+  }
+
+  .service-detail-icon-area {
+    padding: 32px;
+  }
 }
 
 @media (max-width: 768px) {
+  /* Hide scrollbar on mobile */
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
   :root {
     --text-6xl: 2.25rem;
     --text-5xl: 1.875rem;
@@ -2379,6 +2503,148 @@ select {
   .about-values {
     grid-template-columns: 1fr;
   }
+
+  /* Contact Form — tighter for real phones */
+  .contact-form {
+    padding: var(--space-lg) var(--space-md);
+    border-radius: var(--radius-lg);
+  }
+
+  .contact-form h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-xs);
+  }
+
+  .contact-form p {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .form-group {
+    margin-bottom: var(--space-md);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 12px 14px;
+    font-size: var(--text-sm);
+  }
+
+  .form-group label {
+    font-size: 0.7rem;
+    margin-bottom: 6px;
+  }
+
+  /* Contact info grid on contact page */
+  .contact-info-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .contact-info-grid .card {
+    padding: var(--space-lg) !important;
+  }
+
+  /* Contact info cards on home page */
+  .contact-info-card {
+    padding: var(--space-md);
+  }
+
+  /* Service detail cards */
+  .service-detail-content {
+    padding: var(--space-lg);
+  }
+
+  .service-detail-icon-area {
+    padding: var(--space-xl);
+  }
+
+  .service-detail-features {
+    grid-template-columns: 1fr;
+  }
+
+  .service-detail-icon-box {
+    width: 72px;
+    height: 72px;
+  }
+
+  .service-detail-content h3 {
+    font-size: var(--text-xl);
+    margin-bottom: 8px;
+  }
+
+  .service-detail-content p {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  /* Section spacing */
+  .section {
+    padding: var(--space-3xl) 0;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  /* Footer */
+  .footer {
+    padding: var(--space-2xl) 0 0;
+  }
+
+  .footer-grid {
+    gap: var(--space-xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .footer-col h4 {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-md);
+  }
+
+  /* Map */
+  .map-placeholder {
+    height: 220px;
+    border-width: 2px;
+  }
+
+  /* WhatsApp banner */
+  .whatsapp-banner {
+    padding: var(--space-md);
+  }
+
+  .whatsapp-banner-text h4 {
+    font-size: var(--text-sm);
+  }
+
+  .whatsapp-banner-text p {
+    font-size: var(--text-xs);
+  }
+
+  /* Page header */
+  .page-header {
+    padding: 110px 0 40px;
+  }
+
+  .page-header h1 {
+    font-size: var(--text-3xl);
+  }
+
+  /* Custom select and datepicker */
+  .custom-select-trigger {
+    padding: 12px 14px;
+    font-size: var(--text-sm);
+  }
+
+  /* Footer text overflow */
+  .footer-col ul li a,
+  .footer-brand p,
+  .footer-emergency p {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2387,17 +2653,19 @@ select {
     --text-5xl: 1.5rem;
   }
 
+  .container {
+    padding: 0 var(--space-md);
+  }
+
   .hero-stats {
     grid-template-columns: repeat(2, 1fr);
     max-width: 100%;
-    gap: var(--space-md);
+    gap: var(--space-sm);
   }
 
   .why-grid {
     grid-template-columns: 1fr;
   }
-
-  /* Gallery handled in 768px */
 
   .hero-buttons {
     flex-direction: column;
@@ -2405,7 +2673,37 @@ select {
   }
 
   .btn-lg {
-    padding: 14px 32px;
-    font-size: var(--text-base);
+    padding: 12px 28px;
+    font-size: var(--text-sm);
+  }
+
+  .contact-form {
+    padding: var(--space-md);
+  }
+
+  .contact-info-grid .card {
+    padding: var(--space-md) !important;
+    gap: 12px !important;
+  }
+
+  .service-detail-content {
+    padding: var(--space-md);
+  }
+
+  .service-detail-icon-area {
+    padding: var(--space-lg);
+  }
+
+  .service-detail-icon-box {
+    width: 64px;
+    height: 64px;
+  }
+
+  .page-header {
+    padding: 100px 0 32px;
+  }
+
+  .footer-grid {
+    gap: var(--space-lg);
   }
 }

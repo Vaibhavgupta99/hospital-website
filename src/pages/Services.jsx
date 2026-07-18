@@ -91,73 +91,27 @@ export default function Services() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gap: '32px' }}>
+          <div className="services-list">
             {services.map((service, i) => (
               <motion.div
                 key={i}
-                className="card"
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: i % 2 === 0 ? '1fr 2fr' : '2fr 1fr',
-                  gap: '0',
-                  padding: 0,
-                  overflow: 'hidden',
-                  borderRadius: 'var(--radius-xl)',
-                }}
+                className={`card service-detail-card ${i % 2 !== 0 ? 'service-detail-card-reverse' : ''}`}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 * i, duration: 0.5 }}
               >
-                <div style={{
-                  background: 'linear-gradient(135deg, rgba(11,94,215,0.04) 0%, rgba(0,180,216,0.04) 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '48px',
-                  order: i % 2 === 0 ? 0 : 1,
-                }}>
-                  <div style={{
-                    width: '100px',
-                    height: '100px',
-                    background: 'var(--gradient-primary)',
-                    borderRadius: 'var(--radius-xl)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#fff',
-                    boxShadow: '0 8px 25px rgba(11,94,215,0.3)',
-                  }}>
+                <div className="service-detail-icon-area">
+                  <div className="service-detail-icon-box">
                     {service.icon}
                   </div>
                 </div>
-                <div style={{ padding: '36px', order: i % 2 === 0 ? 1 : 0 }}>
-                  <h3 style={{
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: 'var(--text-2xl)',
-                    fontWeight: 600,
-                    marginBottom: '12px',
-                    color: 'var(--dark)',
-                  }}>
-                    {service.title}
-                  </h3>
-                  <p style={{
-                    color: 'var(--gray-500)',
-                    lineHeight: 1.8,
-                    marginBottom: '20px',
-                    fontSize: 'var(--text-base)',
-                  }}>
-                    {service.desc}
-                  </p>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <div className="service-detail-content">
+                  <h3>{service.title}</h3>
+                  <p>{service.desc}</p>
+                  <div className="service-detail-features">
                     {service.features.map((f, j) => (
-                      <div key={j} style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        fontSize: 'var(--text-sm)',
-                        color: 'var(--gray-600)',
-                      }}>
+                      <div key={j} className="service-detail-feature">
                         <Check size={16} style={{ color: 'var(--success)', flexShrink: 0 }} />
                         {f}
                       </div>
