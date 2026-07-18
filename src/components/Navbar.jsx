@@ -52,8 +52,8 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="navbar-cta" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <a href="tel:+919876543210" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div className="navbar-cta">
+            <a href="tel:+919876543210" className="btn btn-primary">
               <Phone size={16} />
               <span className="hide-mobile">Call Now</span>
             </a>

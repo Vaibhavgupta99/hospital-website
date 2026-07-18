@@ -479,9 +479,18 @@ select {
   color: var(--primary);
 }
 
+.navbar-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
 .navbar-cta .btn-primary {
   padding: 10px 24px;
   font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
 .navbar.scrolled .navbar-cta .btn-primary {
@@ -1564,6 +1573,8 @@ select {
 .contact-info-card p {
   font-size: var(--text-sm);
   color: var(--gray-500);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .map-placeholder {
@@ -2239,8 +2250,9 @@ select {
     gap: var(--space-2xl);
   }
 
-  .navbar-links {
-    display: none;
+  .navbar-links,
+  .navbar-cta {
+    display: none !important;
   }
 
   .navbar-toggle {
