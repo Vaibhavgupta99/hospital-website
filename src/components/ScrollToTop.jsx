@@ -18,24 +18,7 @@ export default function ScrollToTop() {
   }, []);
 
   const handleScrollToTop = () => {
-    const startY = window.scrollY;
-    const duration = 800;
-    let startTime;
-
-    const step = (currentTime) => {
-      if (!startTime) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-      
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
-      window.scrollTo(0, startY * (1 - easeProgress));
-      
-      if (timeElapsed < duration) {
-        window.requestAnimationFrame(step);
-      }
-    };
-    
-    window.requestAnimationFrame(step);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
