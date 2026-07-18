@@ -63,18 +63,18 @@ export default function TestimonialsSection() {
   const itemsPerView = typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
   const maxIndex = Math.max(0, testimonials.length - itemsPerView);
 
-  const prev = () => setCurrentIndex(i => Math.max(0, i - 1));
-  const next = () => setCurrentIndex(i => i >= maxIndex ? 0 : Math.min(maxIndex, i + 1));
+  const prev = () => setCurrentIndex(i => i <= 0 ? maxIndex : i - 1);
+  const next = () => setCurrentIndex(i => i >= maxIndex ? 0 : i + 1);
 
   useEffect(() => {
     const timer = setInterval(() => {
       next();
-    }, 4000);
+    }, 3000);
     return () => clearInterval(timer);
   }, [maxIndex]);
 
   // Minimum swipe distance in pixels
-  const minSwipeDistance = 50; 
+  const minSwipeDistance = 50;
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
@@ -88,7 +88,7 @@ export default function TestimonialsSection() {
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
-    
+
     if (isLeftSwipe) {
       next();
     }

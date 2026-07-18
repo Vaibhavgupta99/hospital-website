@@ -64,7 +64,7 @@ export default function HeroSection() {
             transition={{ delay: 0.2 }}
           >
             <span className="hero-badge-dot" />
-            Advanced Multi-Speciality Day Care
+            Advanced Multi-Speciality Hospital
           </motion.div>
 
           <motion.h1
