@@ -54,27 +54,59 @@ const testimonials = [
 ];
 
 export default function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // Triple the array for seamless infinite scrolling (Start in the middle set)
+  const cloneCount = testimonials.length;
+  const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials];
+
+  const [currentIndex, setCurrentIndex] = useState(cloneCount);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   const itemsPerView = typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-  const maxIndex = Math.max(0, testimonials.length - itemsPerView);
 
-  const prev = () => setCurrentIndex(i => i <= 0 ? maxIndex : i - 1);
-  const next = () => setCurrentIndex(i => i >= maxIndex ? 0 : i + 1);
+  const prev = () => {
+    setIsTransitioning(true);
+    setCurrentIndex(i => i - 1);
+  };
+  
+  const next = () => {
+    setIsTransitioning(true);
+    setCurrentIndex(i => i + 1);
+  };
 
+  // Seamless snap-back logic
+  useEffect(() => {
+    let timeout;
+    // If we've scrolled past the middle set to the right
+    if (currentIndex >= cloneCount * 2) {
+      timeout = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(currentIndex - cloneCount);
+      }, 500); // match CSS transition duration
+    } 
+    // If we've scrolled past the middle set to the left
+    else if (currentIndex <= 0) {
+      timeout = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(currentIndex + cloneCount);
+      }, 500);
+    }
+    return () => clearTimeout(timeout);
+  }, [currentIndex, cloneCount]);
+
+  // Auto-scroll
   useEffect(() => {
     const timer = setInterval(() => {
       next();
     }, 3000);
     return () => clearInterval(timer);
-  }, [maxIndex]);
+  }, []);
 
   // Minimum swipe distance in pixels
-  const minSwipeDistance = 50;
+  const minSwipeDistance = 50; 
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
@@ -88,13 +120,24 @@ export default function TestimonialsSection() {
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
-
+    
     if (isLeftSwipe) {
       next();
     }
     if (isRightSwipe) {
       prev();
     }
+  };
+
+  // Helper to map actual index to a 0-5 dot index
+  const getDotIndex = () => {
+    return currentIndex % cloneCount;
+  };
+
+  const handleDotClick = (index) => {
+    setIsTransitioning(true);
+    // Jump to the corresponding index in the middle set
+    setCurrentIndex(cloneCount + index);
   };
 
   return (
@@ -137,9 +180,12 @@ export default function TestimonialsSection() {
         >
           <div
             className="testimonials-track"
-            style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
+            style={{ 
+              transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
+              transition: isTransitioning ? 'transform 0.5s ease' : 'none'
+            }}
           >
-            {testimonials.map((t, i) => (
+            {extendedTestimonials.map((t, i) => (
               <div key={i} className="testimonial-card card">
                 <div className="testimonial-stars">
                   {[...Array(t.rating)].map((_, j) => (
@@ -168,11 +214,11 @@ export default function TestimonialsSection() {
             <ChevronLeft size={20} />
           </button>
           <div className="carousel-dots">
-            {[...Array(maxIndex + 1)].map((_, i) => (
+            {[...Array(cloneCount)].map((_, i) => (
               <button
                 key={i}
-                className={`carousel-dot ${i === currentIndex ? 'active' : ''}`}
-                onClick={() => setCurrentIndex(i)}
+                className={`carousel-dot ${i === getDotIndex() ? 'active' : ''}`}
+                onClick={() => handleDotClick(i)}
                 aria-label={`Go to slide ${i + 1}`}
               />
             ))}
