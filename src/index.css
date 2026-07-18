@@ -972,6 +972,7 @@ select {
   text-align: center;
   padding: var(--space-2xl);
   cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(11, 94, 215, 0.05);
 }
 
 .speciality-card-icon {
@@ -1533,6 +1534,7 @@ select {
   padding: 0 !important;
   overflow: hidden;
   border-radius: var(--radius-xl);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08), 0 4px 15px rgba(11, 94, 215, 0.05) !important;
 }
 
 .service-detail-card-reverse {
