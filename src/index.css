@@ -2679,6 +2679,10 @@ html, body {
     font-size: var(--text-sm);
   }
 
+  .carousel-btn {
+    display: none;
+  }
+
   .contact-form {
     padding: var(--space-md);
   }

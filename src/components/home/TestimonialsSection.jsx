@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 
@@ -64,7 +64,14 @@ export default function TestimonialsSection() {
   const maxIndex = Math.max(0, testimonials.length - itemsPerView);
 
   const prev = () => setCurrentIndex(i => Math.max(0, i - 1));
-  const next = () => setCurrentIndex(i => Math.min(maxIndex, i + 1));
+  const next = () => setCurrentIndex(i => i >= maxIndex ? 0 : Math.min(maxIndex, i + 1));
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      next();
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [maxIndex]);
 
   // Minimum swipe distance in pixels
   const minSwipeDistance = 50; 
